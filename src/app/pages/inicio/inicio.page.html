@@ -1,0 +1,35 @@
+
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title>
+      Lista de Tareas
+    </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="!listaVacia" lines="none" class="ion-padding">
+    <ion-item *ngFor="let tarea of tareas" class="separacion-vertical" button="true" [routerLink]="['/detalles-tarea', tarea.id]">
+      <ion-label>
+        <h2>{{tarea.titulo}}</h2>
+        <p>{{ tarea.fechaVencimiento | date: 'dd/MM/yyyy' }} </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="listaVacia" class="ion-text-center ion-padding">
+    <h2>No hay tareas pendientes</h2>
+    <p>Agrega nuevas tareas para comenzar.</p>
+    <ion-icon name="clipboard-outline" size="large"></ion-icon>
+  </div>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="primary" [routerLink]="['/crear-tarea']">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+</ion-content>

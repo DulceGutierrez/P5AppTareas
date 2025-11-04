@@ -1,0 +1,68 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar>
+    <ion-title>Detalle de tarea</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-item slot="end" lines="none">
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+      <ion-toggle color="primary" [checked]="true" (ionChange)="toggle()" [checked]="!editarTarea"></ion-toggle>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" mode="ios">
+  <ion-list class="ion-padding" lines="none">
+    <ion-item class="separacion-vertical">
+      <ion-label position="floating">Titulo</ion-label>
+      <ion-input type="text" [(ngModel)]="tareaActual.titulo" [disabled]="editarTarea"></ion-input>
+    </ion-item>
+
+    <ion-item class="separacion-vertical">
+      <ion-label position="floating">Descripcion</ion-label>
+      <ion-textarea rows="5" [(ngModel)]="tareaActual.descripcion" [disabled]="editarTarea"></ion-textarea>
+    </ion-item>
+
+    <ion-item button="true" id="datetime-custom" class="separacion-vertical" [disabled]="editarTarea">
+      <ion-label>{{tareaActual.fechaVencimiento || 'Selecciona una fecha'}}</ion-label>
+    </ion-item>
+
+    <ion-modal trigger="datetime-custom" [keepContentsMounted]="true" #customModal>
+      <ng-template>
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-button slot="start" (click)="clickCancelCustom()">
+              Cancel
+            </ion-button>
+            <ion-button slot="end" (click)="clickConfirmCustom()">
+              Confirm
+            </ion-button>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+          <ion-item>
+            <ion-label>Selecciona una fecha</ion-label>
+            <ion-datetime
+              [(ngModel)]="tareaActual.fechaVencimiento"
+              displayFormat="DD/MM/YYYY"
+              [min]="fechaHoy"
+              ></ion-datetime>
+          </ion-item>
+      </ion-content>
+
+      </ng-template>
+    </ion-modal >
+
+    <ion-button expand="block" [disabled]="editarTarea" (click)="guardarCambios('bottom')">
+      Guardar Tarea
+    </ion-button>
+
+    <ion-button expand="block" shape="round" class="btn-eliminar ion-margin-top" color="danger" [disabled]="editarTarea" (click)="eliminarTarea()">
+      Eliminar Tarea
+    </ion-button>
+
+
+  </ion-list>
+</ion-content>
